@@ -31,12 +31,12 @@ body {
 
 .notfound .notfound-404 {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: -160;
+  top: -100;
   display: inline-block;
-  width: 140px;
-  height: 140px;
-  background-image: url("../img/emoji.png");
+  width: 350px;
+  height: 350px;
+  background-image: url("../img/valak2.png");
   background-size: cover;
 }
 

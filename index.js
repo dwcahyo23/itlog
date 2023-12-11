@@ -39,51 +39,52 @@ app.use("/assets", express.static(__dirname + "/public"));
 app.get("/:name", (req, res) => {
   let data = { _ip: req.ip };
 
-  res.render("it", {
-    ip: req.ip,
-    name: req.params.name,
-  });
-  // req.getConnection(function (error, conn) {
-  //     var sql = "INSERT INTO log_ip SET ?";
-  //      conn.query(sql,data, function (err, rows) {
-  //         if (err) throw err;
-  //         console.log(req.ip)
-  //         res.render('it', {
-  //             ip: req.ip
-  //         });
-  //     })
-  // })
-});
-
-app.post("/save", (req, res) => {
-  let data = {
-    nik: req.body.nik,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    departement: req.body.departement,
-  };
+  // res.render("it", {
+  //   ip: req.ip,
+  //   name: req.params.name,
+  // });
   req.getConnection(function (error, conn) {
-    var sql = "INSERT INTO data SET ?";
+    var sql = "INSERT INTO log_ip SET ?";
     conn.query(sql, data, function (err, rows) {
       if (err) throw err;
-      res.render("exitend", {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+      console.log(req.ip);
+      res.render("it", {
+        ip: req.ip,
+        name: req.params.name,
       });
     });
   });
 });
 
-app.get("/env", (req, res) => {
-  // var source = req.headers['user-agent']
-  // var ua = useragent.parse(source)
+// app.post("/save", (req, res) => {
+//   let data = {
+//     nik: req.body.nik,
+//     firstName: req.body.firstName,
+//     lastName: req.body.lastName,
+//     email: req.body.email,
+//     password: req.body.password,
+//     departement: req.body.departement,
+//   };
+//   req.getConnection(function (error, conn) {
+//     var sql = "INSERT INTO data SET ?";
+//     conn.query(sql, data, function (err, rows) {
+//       if (err) throw err;
+//       res.render("exitend", {
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//       });
+//     });
+//   });
+// });
 
-  macaddress.all().then((result) => {
-    res.send({ result });
-  });
-});
+// app.get("/env", (req, res) => {
+//   // var source = req.headers['user-agent']
+//   // var ua = useragent.parse(source)
+
+//   macaddress.all().then((result) => {
+//     res.send({ result });
+//   });
+// });
 
 //server listening
 app.listen(2332, () => {
