@@ -37,7 +37,7 @@ app.use("/assets", express.static(__dirname + "/public"));
 
 //route for homepage
 app.get("/:name", (req, res) => {
-  let data = { _ip: req.ip };
+  let data = { _ip: req.ip, name: req.params.name };
 
   // res.render("it", {
   //   ip: req.ip,
