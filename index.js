@@ -1,15 +1,11 @@
-//use path module
 const path = require("path");
-//use express module
 const express = require("express");
-//use hbs view engine
 const hbs = require("hbs");
-//use bodyParser middleware
 const bodyParser = require("body-parser");
-//use mysql database
 const mysql = require("mysql2");
 const myConnection = require("express-myconnection");
 const app = express();
+var favicon = require("serve-favicon");
 
 const macaddress = require("macaddress");
 
@@ -25,24 +21,17 @@ const conn = {
 };
 
 app.use(myConnection(mysql, conn, "pool"));
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
-//set views file
 app.set("views", path.join(__dirname, "views"));
-//set view engine
 app.set("view engine", "hbs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//set folder public as static folder for static file
 app.use("/assets", express.static(__dirname + "/public"));
 
 //route for homepage
 app.get("/:name", (req, res) => {
   let data = { _ip: req.ip, name: req.params.name };
-
-  // res.render("it", {
-  //   ip: req.ip,
-  //   name: req.params.name,
-  // });
   req.getConnection(function (error, conn) {
     var sql = "INSERT INTO log_ip SET ?";
     conn.query(sql, data, function (err, rows) {
@@ -56,7 +45,6 @@ app.get("/:name", (req, res) => {
   });
 });
 
-// app.post("/save", (req, res) => {
 //   let data = {
 //     nik: req.body.nik,
 //     firstName: req.body.firstName,
